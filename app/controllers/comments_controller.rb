@@ -4,8 +4,11 @@ class CommentsController < ApplicationController
     book = Book.find(params[:book_id])
     comment = current_user.comments.new(book_comment_params)
     comment.book_id = book.id
-    comment.save
-    redirect_to request.referer
+    if comment.save
+      redirect_to request.referer
+    else
+      render 'show'
+    end
   end
 
   def destroy
